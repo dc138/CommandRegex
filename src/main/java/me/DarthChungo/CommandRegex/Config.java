@@ -30,5 +30,6 @@ public class Config {
     }
 
     config = new Toml().read(file).to(ConfigClass.class);
+    config.aliases.removeIf(element -> element.accept == null || element.replace == null);
   }
 }
