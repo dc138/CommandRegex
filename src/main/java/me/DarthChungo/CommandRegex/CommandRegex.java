@@ -9,13 +9,12 @@ import org.slf4j.Logger;
 import javax.inject.Inject;
 import java.nio.file.Path;
 
-@Plugin(
-  id = "commandregex",
-  name = "CommandRegex",
-  version = "1.0.0",
-  description = "Alias commands using regular expressions",
-  authors = { "DarthChungo" }
-)
+@Plugin( //
+    id = "commandregex", //
+    name = "CommandRegex", //
+    version = "1.0.0", //
+    description = "Alias commands using regular expressions", //
+    authors = {"DarthChungo"})
 public class CommandRegex {
   private CommandManager manager;
   private Logger logger;
