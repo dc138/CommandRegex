@@ -7,6 +7,7 @@ import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
+import java.io.File;
 import java.nio.file.Path;
 
 @Plugin( //
@@ -17,13 +18,23 @@ import java.nio.file.Path;
     authors = {"DarthChungo"})
 public class CommandRegex {
   private CommandManager manager;
-  private Logger logger;
-  private Path folder;
+  private Config config;
+
+  public Logger logger;
+  public File datadir;
 
   @Inject
-  public CommandRegex(CommandManager commandManager, Logger logger, @DataDirectory final Path folder) {
-    this.manager = commandManager;
-    this.logger = logger;
-    this.folder = folder;
+  public CommandRegex(CommandManager commandManager, Logger log, @DataDirectory final Path folder) {
+    manager = commandManager;
+    logger = log;
+    datadir = folder.toFile();
+
+    config = new Config(this);
+
+    if (!datadir.exists()) {
+      datadir.mkdirs();
+    }
+
+    config.load();
   }
 }
