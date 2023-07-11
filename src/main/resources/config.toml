@@ -1,0 +1,3 @@
+aliases = [
+    { accept = "^/gmc$", replace = "/gamemode creative" }
+]
