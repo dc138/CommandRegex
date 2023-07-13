@@ -3,7 +3,7 @@ package me.DarthChungo.CommandRegex;
 import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
-
+import me.DarthChungo.CommandRegex.ConfigManager.Config.Alias;
 import org.slf4j.Logger;
 
 import javax.inject.Inject;
@@ -19,48 +19,47 @@ import java.util.regex.Pattern;
     description = "Alias commands using regular expressions", //
     authors = {"DarthChungo"})
 public class CommandRegex {
-  private CommandManager manager;
-  private Config config;
+  private CommandManager command_manager;
+  private ConfigManager config_manager;
 
   public Logger logger;
   public File datadir;
 
   @Inject
   public CommandRegex(CommandManager commandManager, Logger log, @DataDirectory final Path folder) {
-    manager = commandManager;
+    command_manager = commandManager;
     logger = log;
     datadir = folder.toFile();
 
-    config = new Config(this);
+    config_manager = new ConfigManager(this);
 
     if (!datadir.exists()) {
       datadir.mkdirs();
     }
 
-    config.load();
+    config_manager.load();
 
-    logger.warn(findAndReplace("/gamemode creative", "^(/g)a(m)emode (c)reative$", "\\1\\2\\3"));
+    logger.warn(processCommand("/gmc"));
   }
 
-  public String findAndReplace(String input, String accept, String replace) {
-    logger.warn("findAndReplace: input=" + input + ", accept=" + accept + ", replace=" + replace);
+  public String processCommand(String input) {
+    String result = input;
 
-    Pattern regex = null;
-
-    try {
-      regex = Pattern.compile(accept);
-
-    } catch (Exception e) {
-      return null;
+    for (int i = 0; i < config_manager.config.aliases.size(); i++) {
+      result = findAndReplace(result, config_manager.config.aliases.get(i));
     }
 
-    Matcher matcher = regex.matcher(input);
+    return result;
+  }
+
+  public String findAndReplace(String input, Alias alias) {
+    Matcher matcher = alias.accept.matcher(input);
     StringBuffer output = new StringBuffer(input);
 
     int offset = 0;
 
     while (matcher.find()) {
-      String replaced = replace;
+      String replaced = alias.replace;
 
       for (int i = 0; i <= matcher.groupCount(); i++) {
         replaced = replaced.replace("\\" + i, matcher.group(i));
