@@ -45,7 +45,15 @@ public class CommandRegex {
   public String findAndReplace(String input, String accept, String replace) {
     logger.warn("findAndReplace: input=" + input + ", accept=" + accept + ", replace=" + replace);
 
-    Pattern regex = Pattern.compile(accept);
+    Pattern regex = null;
+
+    try {
+      regex = Pattern.compile(accept);
+
+    } catch (Exception e) {
+      return null;
+    }
+
     Matcher matcher = regex.matcher(input);
     StringBuffer output = new StringBuffer(input);
 
