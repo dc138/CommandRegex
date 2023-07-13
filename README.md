@@ -39,7 +39,7 @@ For example:
 
 ```toml
 aliases = [
-    { accept = "^go (\w*)$", replace = "server \1" }
+    { accept = "^go (\\w*)$", replace = "server \\1" }
 ]
 ```
 
