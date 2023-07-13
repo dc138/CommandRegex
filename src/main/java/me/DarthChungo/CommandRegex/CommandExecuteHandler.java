@@ -15,12 +15,6 @@ public class CommandExecuteHandler {
   @Subscribe(order = PostOrder.NORMAL)
   public void onCommandExecute(CommandExecuteEvent event) {
     String replaced_command = plugin.processCommand(event.getCommand());
-
-    if (plugin.proxy_server.getCommandManager().hasCommand(replaced_command)) {
-      event.setResult(CommandResult.command(plugin.processCommand(replaced_command)));
-
-    } else {
-      event.setResult(CommandResult.command(plugin.processCommand(replaced_command)));
-    }
+    event.setResult(CommandResult.command(plugin.processCommand(replaced_command)));
   }
 }
