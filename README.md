@@ -33,8 +33,10 @@ aliases = [
 
 The `accept` field represents the regex that must be matched for a certain command to be replaced.
 Do **NOT** include the leading `/` character here.
+
 You must use the `^` and `$` beginning and end of string to match the command, unless you want to replace text in the middle of commands.
 You may use capture groups in the `accept` regex, which you may then use in the `replace` field by using `\n` where `n` is the capture group number, similar to vim's `:s` command.
+
 For example:
 
 ```toml
@@ -43,7 +45,8 @@ aliases = [
 ]
 ```
 
-may be used to alias the `server` command to a similar, `go` commands, that captures the first argument, and then uses it to send the player to that server.
+may be used to alias the `server` command to a similar, `go` command, that captures the first argument, and then uses it to send the player to that server.
+
 Note that this plugin does **not** handle command permissions: it only changes player-sent commands in-place.
 This plugin effectively works as an advanced aliaser, leaving commands permissions to the downstream receivers: the proxy in the case of proxy commands, or the server otherwise.
 
