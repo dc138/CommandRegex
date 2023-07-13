@@ -1,7 +1,6 @@
 package me.DarthChungo.CommandRegex;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import com.moandjiezana.toml.Toml;
@@ -23,7 +22,7 @@ public class Config {
         InputStream stream = plugin.getClass().getResourceAsStream("/" + file.getName());
         Files.copy(stream, file.toPath());
 
-      } catch (IOException e) {
+      } catch (Exception e) {
         plugin.logger.error("Error loading config: " + e);
         plugin.logger.error(e.getStackTrace().toString());
       }

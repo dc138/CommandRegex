@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import javax.inject.Inject;
 import java.io.File;
 import java.nio.file.Path;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Plugin( //
     id = "commandregex", //
@@ -36,5 +38,30 @@ public class CommandRegex {
     }
 
     config.load();
+
+    logger.warn(findAndReplace("/gamemode creative", "^(/g)a(m)emode (c)reative$", "\\1\\2\\3"));
+  }
+
+  public String findAndReplace(String input, String accept, String replace) {
+    logger.warn("findAndReplace: input=" + input + ", accept=" + accept + ", replace=" + replace);
+
+    Pattern regex = Pattern.compile(accept);
+    Matcher matcher = regex.matcher(input);
+    StringBuffer output = new StringBuffer(input);
+
+    int offset = 0;
+
+    while (matcher.find()) {
+      String replaced = replace;
+
+      for (int i = 0; i <= matcher.groupCount(); i++) {
+        replaced = replaced.replace("\\" + i, matcher.group(i));
+      }
+
+      output.replace(matcher.start() + offset, matcher.end() + offset, replaced);
+      offset += replaced.length() - matcher.group().length();
+    }
+
+    return output.toString();
   }
 }
