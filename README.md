@@ -1,7 +1,7 @@
 # CommandRegex
 
 Simple velocity proxy plugin that allows vim-like search and replace functionality on player sent commands through regex.
-For example, you might want to allow players to use a `/lobby` command instead of having to type the longer, `/server lobby` command.
+For example, you might want to allow players to use a `/lobby` command instead of having to type the longer, `/server lobby` command, or replace `/survivalX`, where `X` is an arbitrary integer, with `/server survivalX`.
 
 **Note:** because this plugin modifies commands sent by the user, it is **NOT** compatible with chat-signing, as chat packets are modified in between client and server.
 For this reason, it **requires** that downstream servers have `NoChatReports`, or a similar mod, installed.
