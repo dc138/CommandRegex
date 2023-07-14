@@ -50,6 +50,12 @@ may be used to alias the `server` command to a similar, `go` command, that captu
 Note that this plugin does **not** handle command permissions: it only changes player-sent commands in-place.
 This plugin effectively works as an advanced aliaser, leaving commands permissions to the downstream receivers: the proxy in the case of proxy commands, or the server otherwise.
 
+## Commands
+
+1. `/commandregex`, `/cmdregex`, `/cx`: main plugin command. Must specify:
+    1. `version`: fetch the plugin's version.
+    2. `reload`: reload the plugin's configuration. Requires `commandregex.reload`.
+
 ## License
 
 This repository is released under the `MIT` license:
