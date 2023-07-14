@@ -2,6 +2,7 @@ package me.DarthChungo.CommandRegex;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
+import com.velocitypowered.api.event.proxy.ProxyReloadEvent;
 import com.velocitypowered.api.plugin.Dependency;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
@@ -25,7 +26,7 @@ import java.util.regex.Matcher;
 )
 public class CommandRegex {
   public final ProxyServer proxy_server;
-  private final ConfigManager config_manager;
+  public final ConfigManager config_manager;
 
   public Logger logger;
   public File datadir;
@@ -47,6 +48,17 @@ public class CommandRegex {
   @Subscribe
   public void onProxyInitialization(ProxyInitializeEvent event) {
     proxy_server.getEventManager().register(this, new CommandExecuteHandler(this));
+    proxy_server.getCommandManager().register(CommandRegexCommand.createBrigadierCommand(this));
+  }
+
+  @Subscribe
+  public void onProxyReload(ProxyReloadEvent event) {
+    reload();
+  }
+
+  public void reload() {
+    config_manager.clear();
+    config_manager.load();
   }
 
   public String processCommand(String input) {

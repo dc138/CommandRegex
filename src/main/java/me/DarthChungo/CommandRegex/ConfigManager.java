@@ -62,6 +62,11 @@ public class ConfigManager {
                 + e.getMessage().replace("\n", " ") + ", ignoring it...");
           }
         });
+
+    plugin.logger.info("Loaded " + config.aliases.size() + " aliases");
+  }
+
+  public void clear() {
+    config.aliases.clear();
   }
 }
-
