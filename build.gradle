@@ -21,18 +21,12 @@ dependencies {
     implementation "net.kyori:adventure-api:${project.adventure_api}"
 }
 
-task updateVersion(type: Copy) {
-    from('src') {}
-
-    into 'build/sources/java'
+task processSource(type: Sync) {
+    from sourceSets.main.java
     filter(ReplaceTokens, tokens: [VERSION: project.version])
+    into "$buildDir/src"
 }
 
-compileJava.dependsOn updateVersion
-processResources.dependsOn updateVersion
-
-sourceSets {
-    main.java.srcDirs = ['build/sources/java/main/java']
-    main.resources.srcDirs = ['build/sources/java/main/resources']
+compileJava {
+    source = processSource.outputs
 }
-

@@ -20,8 +20,8 @@ import java.util.regex.Matcher;
     name = "CommandRegex", //
     version = BuildConstants.version, //
     description = "Alias commands using regular expressions", //
-    authors = {"DarthChungo"}, //
-    dependencies = {@Dependency(id = "unsignedvelocity")} //
+    authors = { "DarthChungo" }, //
+    dependencies = { @Dependency(id = "unsignedvelocity") } //
 )
 public class CommandRegex {
   public final ProxyServer proxy_server;
