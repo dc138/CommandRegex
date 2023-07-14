@@ -48,7 +48,8 @@ public class CommandRegex {
   @Subscribe
   public void onProxyInitialization(ProxyInitializeEvent event) {
     proxy_server.getEventManager().register(this, new CommandExecuteHandler(this));
-    proxy_server.getCommandManager().register(CommandRegexCommand.createBrigadierCommand(this));
+    proxy_server.getCommandManager().register("commandregex", CommandRegexCommand.createBrigadierCommand(this),
+        "cmdregex", "cx");
   }
 
   @Subscribe
