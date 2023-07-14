@@ -18,7 +18,7 @@ import java.util.regex.Matcher;
 @Plugin( //
     id = "commandregex", //
     name = "CommandRegex", //
-    version = "1.0.0", //
+    version = BuildConstants.version, //
     description = "Alias commands using regular expressions", //
     authors = {"DarthChungo"}, //
     dependencies = {@Dependency(id = "unsignedvelocity")} //
