@@ -42,7 +42,6 @@ public class CommandRegex {
     }
 
     config_manager = new ConfigManager(this);
-    config_manager.load();
   }
 
   @Subscribe
@@ -50,6 +49,8 @@ public class CommandRegex {
     proxy_server.getEventManager().register(this, new CommandExecuteHandler(this));
     proxy_server.getCommandManager().register("commandregex", CommandRegexCommand.createBrigadierCommand(this),
         "cmdregex", "cx");
+
+    load();
   }
 
   @Subscribe
@@ -57,9 +58,29 @@ public class CommandRegex {
     reload();
   }
 
-  public void reload() {
-    config_manager.clear();
+  public void load() {
     config_manager.load();
+
+    logger.info("Loaded " + config_manager.config.aliases.size()
+        + " aliases and " + config_manager.config.register.size()
+        + " commands to register");
+
+    config_manager.config.register.forEach(cmd -> {
+      proxy_server.getCommandManager().register(cmd, new NullCommand());
+    });
+  }
+
+  public void unload() {
+    config_manager.config.register.forEach(cmd -> {
+      proxy_server.getCommandManager().unregister(cmd);
+    });
+
+    config_manager.unload();
+  }
+
+  public void reload() {
+    unload();
+    load();
   }
 
   public String processCommand(String input) {

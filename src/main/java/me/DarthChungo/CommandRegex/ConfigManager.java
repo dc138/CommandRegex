@@ -24,6 +24,7 @@ public class ConfigManager {
     }
 
     public final List<Alias> aliases = new ArrayList<>();
+    public final List<String> register = new ArrayList<>();
   }
 
   public final Config config = new Config();
@@ -48,10 +49,12 @@ public class ConfigManager {
       }
     }
 
-    (new Toml()).read(file).to(FileData.class).aliases.stream() //
+    FileData data = (new Toml()).read(file).to(FileData.class);
+
+    data.aliases.stream()
         .filter(element -> {
           return element.accept != null && element.replace != null;
-        }) //
+        })
         .forEach(element -> {
           try {
             Pattern regex = Pattern.compile(element.accept);
@@ -63,10 +66,17 @@ public class ConfigManager {
           }
         });
 
-    plugin.logger.info("Loaded " + config.aliases.size() + " aliases");
+    data.register.stream()
+        .filter(element -> {
+          return element != null;
+        })
+        .forEach(element -> {
+          config.register.add(element);
+        });
   }
 
-  public void clear() {
+  public void unload() {
     config.aliases.clear();
+    config.register.clear();
   }
 }

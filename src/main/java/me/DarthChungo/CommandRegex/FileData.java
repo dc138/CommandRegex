@@ -9,5 +9,5 @@ public class FileData {
   }
 
   public List<AliasEntry> aliases;
+  public List<String> register;
 }
-

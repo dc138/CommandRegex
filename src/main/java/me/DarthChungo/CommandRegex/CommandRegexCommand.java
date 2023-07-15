@@ -34,9 +34,6 @@ public final class CommandRegexCommand {
                   ctx.getSource()
                       .sendMessage(Component.text("Reloaded configuration"));
 
-                  ctx.getSource()
-                      .sendMessage(Component.text(
-                          "Loaded " + plugin.config_manager.config.aliases.size() + " aliases"));
                   return Command.SINGLE_SUCCESS;
                 }))
             .build();
