@@ -29,10 +29,17 @@ Sample config file:
 aliases = [
     { accept = "^gmc$", replace = "gamemode creative" }
 ]
+
+register = [
+    "gmc"
+]
 ```
 
 The `accept` field represents the regex that must be matched for a certain command to be replaced.
 Do **NOT** include the leading `/` character here.
+
+The `register` field includes commands that will be shown to the user to auto-complete.
+Not very usefull when using regex to match a command's name, as there is usually no way to register all posible commands that will match a specified regex.
 
 You must use the `^` and `$` beginning and end of string to match the command, unless you want to replace text in the middle of commands.
 You may use capture groups in the `accept` regex, which you may then use in the `replace` field by using `\n` where `n` is the capture group number, similar to vim's `:s` command.
@@ -42,6 +49,10 @@ For example:
 ```toml
 aliases = [
     { accept = "^go (\\w*)$", replace = "server \\1" }
+]
+
+register = [
+    "go"
 ]
 ```
 
