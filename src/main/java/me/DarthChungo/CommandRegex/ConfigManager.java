@@ -46,10 +46,16 @@ public class ConfigManager {
       } catch (Exception e) {
         plugin.logger.error("Error loading config: " + e);
         plugin.logger.error(e.getStackTrace().toString());
+        return;
       }
     }
 
     FileData data = (new Toml()).read(file).to(FileData.class);
+
+    if (data.aliases == null || data.register == null) {
+      plugin.logger.error("Invalid config: some or all fields have not been specified");
+      return;
+    }
 
     data.aliases.stream()
         .filter(element -> {
